@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MakoIoT.Device.Services.WiFi.AP</id>
+    <version>$version$</version>
+    <title>MakoIoT.Device.Services.WiFi.AP</title>
+    <authors>CSHARK</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/CShark-Hub/Mako-IoT.Device.Services.WiFi.AP</projectUrl>
+    <repository type="git" url="https://github.com/CShark-Hub/Mako-IoT.Device.Services.WiFi.AP" />
+    <copyright>Copyright (c) CSHARK Sp. z o. o.</copyright>
+    <description>WiFi Access Point library for MAKO-IoT</description>
+    <tags>nanoFramework C# csharp netmf netnf mako-iot wifi ap access point</tags>
+    <dependencies>
+	    <dependency id="Mako.nanoFramework.Json" version="2.2.8"  />
+	    <dependency id="MakoIoT.Device.Services.Configuration" version="1.0.3"  />
+	    <dependency id="MakoIoT.Device.Services.Configuration.Metadata" version="1.0.4"  />
+	    <dependency id="MakoIoT.Device.Services.DependencyInjection" version="1.0.3"  />
+	    <dependency id="MakoIoT.Device.Services.Interface" version="1.0.3"  />
+	    <dependency id="MakoIoT.Device.Services.Mediator" version="1.0.3"  />
+	    <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.1"  />
+	    <dependency id="nanoFramework.CoreLibrary" version="1.12.0"  />
+	    <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.89"  />
+	    <dependency id="nanoFramework.Logging" version="1.1.25"  />
+	    <dependency id="nanoFramework.Runtime.Events" version="1.11.1"  />
+	    <dependency id="nanoFramework.System.Collections" version="1.4.0"  />
+	    <dependency id="nanoFramework.System.Device.Wifi" version="1.5.27"  />
+	    <dependency id="nanoFramework.System.IO.Streams" version="1.1.15"  />
+	    <dependency id="nanoFramework.System.Net" version="1.10.24"  />
+	    <dependency id="nanoFramework.System.Text" version="1.2.7"  />
+	    <dependency id="nanoFramework.System.Threading" version="1.1.8"  />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\MakoIoT.Device.Services.WiFi.AP\bin\Release\MakoIoT.Device.Services.WiFi.AP.dll" target="lib\MakoIoT.Device.Services.WiFi.AP.dll" />
+    <file src="src\MakoIoT.Device.Services.WiFi.AP\bin\Release\MakoIoT.Device.Services.WiFi.AP.pdb" target="lib\MakoIoT.Device.Services.WiFi.AP.pdb" />
+    <file src="src\MakoIoT.Device.Services.WiFi.AP\bin\Release\MakoIoT.Device.Services.WiFi.AP.pdbx" target="lib\MakoIoT.Device.Services.WiFi.AP.pdbx" />
+    <file src="src\MakoIoT.Device.Services.WiFi.AP\bin\Release\MakoIoT.Device.Services.WiFi.AP.pe" target="lib\MakoIoT.Device.Services.WiFi.AP.pe" />
+    <file src="README.md" target="docs\" />
+    <file src="LICENSE.md" target="" />
+  </files>
+</package>
