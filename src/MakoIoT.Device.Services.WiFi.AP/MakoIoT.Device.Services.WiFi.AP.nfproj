@@ -29,12 +29,6 @@
     <Reference Include="Iot.Device.DhcpServer">
       <HintPath>..\..\packages\nanoFramework.Iot.Device.DhcpServer.1.2.89\lib\Iot.Device.DhcpServer.dll</HintPath>
     </Reference>
-    <Reference Include="Mako.nanoFramework.Json">
-      <HintPath>..\..\packages\Mako.nanoFramework.Json.2.2.8.1\lib\Mako.nanoFramework.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="MakoIoT.Device.Services.Configuration">
-      <HintPath>..\..\packages\MakoIoT.Device.Services.Configuration.1.0.3.12083\lib\MakoIoT.Device.Services.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="MakoIoT.Device.Services.Configuration.Metadata">
       <HintPath>..\..\packages\MakoIoT.Device.Services.Configuration.Metadata.1.0.4.19171\lib\MakoIoT.Device.Services.Configuration.Metadata.dll</HintPath>
     </Reference>
@@ -43,9 +37,6 @@
     </Reference>
     <Reference Include="MakoIoT.Device.Services.Interface">
       <HintPath>..\..\packages\MakoIoT.Device.Services.Interface.1.0.3.26226\lib\MakoIoT.Device.Services.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="MakoIoT.Device.Services.Mediator">
-      <HintPath>..\..\packages\MakoIoT.Device.Services.Mediator.1.0.3.42131\lib\MakoIoT.Device.Services.Mediator.dll</HintPath>
     </Reference>
     <Reference Include="MakoIoT.Device.Utilities.Invoker">
       <HintPath>..\..\packages\MakoIoT.Device.Utilities.Invoker.1.0.1.17335\lib\MakoIoT.Device.Utilities.Invoker.dll</HintPath>
