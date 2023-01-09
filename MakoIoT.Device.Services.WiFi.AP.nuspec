@@ -17,20 +17,20 @@
     <description>WiFi Access Point library for MAKO-IoT</description>
     <tags>nanoFramework C# csharp netmf netnf mako-iot wifi ap access point</tags>
     <dependencies>
-	    <dependency id="MakoIoT.Device.Services.Configuration.Metadata" version="1.0.4"  />
-	    <dependency id="MakoIoT.Device.Services.DependencyInjection" version="1.0.3"  />
-	    <dependency id="MakoIoT.Device.Services.Interface" version="1.0.3"  />
-	    <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.1"  />
-	    <dependency id="nanoFramework.CoreLibrary" version="1.12.0"  />
-	    <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.89"  />
-	    <dependency id="nanoFramework.Logging" version="1.1.25"  />
-	    <dependency id="nanoFramework.Runtime.Events" version="1.11.1"  />
-	    <dependency id="nanoFramework.System.Collections" version="1.4.0"  />
-	    <dependency id="nanoFramework.System.Device.Wifi" version="1.5.27"  />
-	    <dependency id="nanoFramework.System.IO.Streams" version="1.1.15"  />
-	    <dependency id="nanoFramework.System.Net" version="1.10.24"  />
-	    <dependency id="nanoFramework.System.Text" version="1.2.7"  />
-	    <dependency id="nanoFramework.System.Threading" version="1.1.8"  />
+      <dependency id="MakoIoT.Device.Services.Configuration.Metadata" version="1.0.15.16509" />
+      <dependency id="MakoIoT.Device.Services.DependencyInjection" version="1.0.17.52441" />
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.17.36444" />
+      <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.1.17335" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.174" />
+      <dependency id="nanoFramework.Logging" version="1.1.63" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.18" />
+      <dependency id="nanoFramework.System.Device.Wifi" version="1.5.51" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
+      <dependency id="nanoFramework.System.Net" version="1.10.52" />
+      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.19" />
     </dependencies>
   </metadata>
   <files>
