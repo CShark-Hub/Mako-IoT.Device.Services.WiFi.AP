@@ -18,9 +18,9 @@ pool:
 variables:
 - group: mako-iot-github
 - name: runSettingsFile
-  value: 'Tests\MakoIoT.Device.Services.WiFi.AP.Test\nano.runsettings'
+  value: 'Tests\Mako-IoT.Device.Services.WiFi.AP.Test\nano.runsettings'
 - name: packageName
-  value: 'MakoIoT.Device.Services.WiFi.AP'
+  value: 'Mako-IoT.Device.Services.WiFi.AP'
 
 resources:
   repositories:
