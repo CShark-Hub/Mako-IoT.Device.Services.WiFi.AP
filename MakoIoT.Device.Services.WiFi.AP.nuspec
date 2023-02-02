@@ -19,7 +19,7 @@
     <dependencies>
       <dependency id="MakoIoT.Device.Services.Configuration.Metadata" version="1.0.17.15448" />
       <dependency id="MakoIoT.Device.Services.Interface" version="1.0.23.51280" />
-      <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.1.17335" />
+      <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.5.47630" />
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.DependencyInjection" version="1.0.22" />
       <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.174" />
