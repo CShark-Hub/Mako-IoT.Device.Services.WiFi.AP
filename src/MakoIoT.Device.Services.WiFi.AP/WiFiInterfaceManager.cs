@@ -15,10 +15,62 @@ namespace MakoIoT.Device.Services.WiFi.AP
     /// <inheritdoc />
     public class WiFiInterfaceManager : INetworkInterfaceManager
     {
-        private readonly NetworkInterface _wifiInterface;
-        private readonly NetworkInterface _apInterface;
-        private readonly Wireless80211Configuration _wifiConfiguration;
-        private readonly WirelessAPConfiguration _apConfiguration;
+        private NetworkInterface _wifiInterface;
+        private NetworkInterface wifiInterface
+        {
+            get
+            {
+                if (_wifiInterface == null)
+                {
+                    _wifiInterface = FindInterfaces(NetworkInterfaceType.Wireless80211);
+                }
+
+                return _wifiInterface;
+            }
+        }
+
+        private NetworkInterface _apInterface;
+        private NetworkInterface apInterface
+        {
+            get
+            {
+                if (_apInterface == null)
+                {
+                    _apInterface = FindInterfaces(NetworkInterfaceType.WirelessAP);
+                }
+
+                return _apInterface;
+            }
+        }
+
+        private Wireless80211Configuration _wifiConfiguration;
+        private Wireless80211Configuration wifiConfiguration
+        {
+            get
+            {
+                if (_wifiConfiguration == null)
+                {
+                    _wifiConfiguration = Wireless80211Configuration.GetAllWireless80211Configurations()[wifiInterface.SpecificConfigId];
+                }
+
+                return _wifiConfiguration;
+            }
+        }
+
+        private WirelessAPConfiguration _apConfiguration;
+        private WirelessAPConfiguration apConfiguration
+        {
+            get
+            {
+                if (_apConfiguration == null)
+                {
+                    _apConfiguration = WirelessAPConfiguration.GetAllWirelessAPConfigurations()[apInterface.SpecificConfigId];
+                }
+
+                return _apConfiguration;
+            }
+        }
+
         private readonly WiFiAPConfig _config;
         private DhcpServer _dhcpServer;
         private readonly ILogger _logger;
@@ -29,25 +81,21 @@ namespace MakoIoT.Device.Services.WiFi.AP
         {
             _logger = logger;
             _config = (WiFiAPConfig)configService.GetConfigSection(WiFiAPConfig.SectionName, typeof(WiFiAPConfig));
-
-            FindInterfaces(out _wifiInterface, out _apInterface);
-            _wifiConfiguration = Wireless80211Configuration.GetAllWireless80211Configurations()[_wifiInterface.SpecificConfigId];
-            _apConfiguration = WirelessAPConfiguration.GetAllWirelessAPConfigurations()[_apInterface.SpecificConfigId];
         }
 
         /// <inheritdoc />
-        public bool IsWifiEnabled => (_wifiConfiguration.Options & Wireless80211Configuration.ConfigurationOptions.Enable)
+        public bool IsWifiEnabled => (wifiConfiguration.Options & Wireless80211Configuration.ConfigurationOptions.Enable)
                                      == Wireless80211Configuration.ConfigurationOptions.Enable;
 
         /// <inheritdoc />
-        public bool IsApEnabled => (_apConfiguration.Options & WirelessAPConfiguration.ConfigurationOptions.Enable)
+        public bool IsApEnabled => (apConfiguration.Options & WirelessAPConfiguration.ConfigurationOptions.Enable)
                                    == WirelessAPConfiguration.ConfigurationOptions.Enable;
 
         /// <inheritdoc />
-        public string WifiIpAddress => _wifiInterface.IPv4Address;
+        public string WifiIpAddress => wifiInterface.IPv4Address;
         
         /// <inheritdoc />
-        public string ApIpAddress => _apInterface.IPv4Address;
+        public string ApIpAddress => apInterface.IPv4Address;
 
         /// <inheritdoc />
         public bool HasPendingChanges { get; private set; }
@@ -55,8 +103,8 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void EnableWiFi()
         {
-            _wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Enable;
-            _wifiConfiguration.SaveConfiguration();
+            wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Enable;
+            wifiConfiguration.SaveConfiguration();
             _logger.LogDebug("WiFi enabled");
             HasPendingChanges = true;
         }
@@ -64,8 +112,8 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void DisableWiFi()
         {
-            _wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Disable;
-            _wifiConfiguration.SaveConfiguration();
+            wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Disable;
+            wifiConfiguration.SaveConfiguration();
             _logger.LogDebug("WiFi disabled");
             HasPendingChanges = true;
         }
@@ -73,21 +121,23 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void EnableAP()
         {
-            _apInterface.EnableStaticIPv4(_config.IpAddress, _config.SubnetMask, _config.IpAddress);
-            _apConfiguration.Ssid = _config.Ssid;
+            apInterface.EnableStaticIPv4(_config.IpAddress, _config.SubnetMask, _config.IpAddress);
+            apConfiguration.Ssid = _config.Ssid;
             if (String.IsNullOrEmpty(_config.Password))
-                _apConfiguration.Authentication = AuthenticationType.Open;
+            {
+                apConfiguration.Authentication = AuthenticationType.Open;
+            }
             else
             {
-                _apConfiguration.Authentication = AuthenticationType.WPA2;
-                _apConfiguration.Password = _config.Password;
+                apConfiguration.Authentication = AuthenticationType.WPA2;
+                apConfiguration.Password = _config.Password;
             }
 
-            _apConfiguration.MaxConnections = _config.MaxConnections;
+            apConfiguration.MaxConnections = _config.MaxConnections;
 
-            _apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Enable |
+            apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Enable |
                                        WirelessAPConfiguration.ConfigurationOptions.AutoStart;
-            _apConfiguration.SaveConfiguration();
+            apConfiguration.SaveConfiguration();
 
             _logger.LogDebug("AP enabled");
 
@@ -97,8 +147,8 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void DisableAP()
         {
-            _apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Disable;
-            _apConfiguration.SaveConfiguration();
+            apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Disable;
+            apConfiguration.SaveConfiguration();
 
             _logger.LogDebug("AP enabled");
 
@@ -158,7 +208,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
             _logger.LogDebug("Wifi disconnecting");
             var adapters = WifiAdapter.FindAllAdapters();
             adapters[0].Disconnect();
-            _logger.LogTrace($"{_wifiInterface.IPv4Address}");
+            _logger.LogTrace($"{wifiInterface.IPv4Address}");
 
         }
 
@@ -193,22 +243,17 @@ namespace MakoIoT.Device.Services.WiFi.AP
             }
         }
 
-        private void FindInterfaces(out NetworkInterface wifiInterface, out NetworkInterface apInterface)
+        private NetworkInterface FindInterfaces(NetworkInterfaceType interfaceType)
         {
-            wifiInterface = null;
-            apInterface = null;
             foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
-                switch (networkInterface.NetworkInterfaceType)
+                if (networkInterface.NetworkInterfaceType == interfaceType)
                 {
-                    case NetworkInterfaceType.Wireless80211:
-                        wifiInterface = networkInterface;
-                        break;
-                    case NetworkInterfaceType.WirelessAP:
-                        apInterface = networkInterface;
-                        break;
+                    return networkInterface;
                 }
             }
+
+            throw new InvalidOperationException();
         }
     }
 }
