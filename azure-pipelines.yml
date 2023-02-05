@@ -20,7 +20,7 @@ variables:
 - name: runSettingsFile
   value: 'Tests\Mako-IoT.Device.Services.WiFi.AP.Test\nano.runsettings'
 - name: packageName
-  value: 'Mako-IoT.Device.Services.WiFi.AP'
+  value: 'MakoIoT.Device.Services.WiFi.AP'
 
 resources:
   repositories:
