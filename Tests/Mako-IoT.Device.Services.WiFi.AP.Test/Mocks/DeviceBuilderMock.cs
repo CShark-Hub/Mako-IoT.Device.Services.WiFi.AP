@@ -18,6 +18,11 @@ namespace Mako_IoT.Device.Services.WiFi.AP.Test.Mocks
             Services = new ServiceCollection();
         }
 
+        public IDeviceBuilder ConfigureDI(ConfigureDIDelegate configureDiAction)
+        {
+            throw new NotImplementedException();
+        }
+
         public IDevice Build()
         {
             throw new NotImplementedException();
