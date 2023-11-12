@@ -1,5 +1,5 @@
 using nanoFramework.TestFramework;
-using nanoFramework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Mako_IoT.Device.Services.WiFi.AP.Test.Mocks;
 using MakoIoT.Device.Services.WiFi.AP.Extensions;
 using MakoIoT.Device.Services.Interface;
