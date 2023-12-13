@@ -8,7 +8,6 @@ using MakoIoT.Device.Services.Interface;
 using MakoIoT.Device.Services.WiFi.AP.Configuration;
 using MakoIoT.Device.Services.WiFi.AP.Model;
 using MakoIoT.Device.Utilities.Invoker;
-using Microsoft.Extensions.Logging;
 
 namespace MakoIoT.Device.Services.WiFi.AP
 {
@@ -73,11 +72,11 @@ namespace MakoIoT.Device.Services.WiFi.AP
 
         private readonly WiFiAPConfig _config;
         private DhcpServer _dhcpServer;
-        private readonly ILogger _logger;
+        private readonly ILog _logger;
         private AutoResetEvent _semaphore;
         private WiFiNetworkInfo[] _networks;
 
-        public WiFiInterfaceManager(IConfigurationService configService, ILogger logger)
+        public WiFiInterfaceManager(IConfigurationService configService, ILog logger)
         {
             _logger = logger;
             _config = (WiFiAPConfig)configService.GetConfigSection(WiFiAPConfig.SectionName, typeof(WiFiAPConfig));
@@ -105,7 +104,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
         {
             wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Enable;
             wifiConfiguration.SaveConfiguration();
-            _logger.LogDebug("WiFi enabled");
+            _logger.Trace("WiFi enabled");
             HasPendingChanges = true;
         }
 
@@ -114,7 +113,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
         {
             wifiConfiguration.Options = Wireless80211Configuration.ConfigurationOptions.Disable;
             wifiConfiguration.SaveConfiguration();
-            _logger.LogDebug("WiFi disabled");
+            _logger.Trace("WiFi disabled");
             HasPendingChanges = true;
         }
 
@@ -139,7 +138,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
                                        WirelessAPConfiguration.ConfigurationOptions.AutoStart;
             apConfiguration.SaveConfiguration();
 
-            _logger.LogDebug("AP enabled");
+            _logger.Trace("AP enabled");
 
             HasPendingChanges = true;
         }
@@ -150,7 +149,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
             apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Disable;
             apConfiguration.SaveConfiguration();
 
-            _logger.LogDebug("AP enabled");
+            _logger.Trace("AP enabled");
 
             HasPendingChanges = true;
         }
@@ -167,7 +166,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
                 if (!dhcpInitResult)
                     throw new Exception("DHCP failed to start");
 
-                _logger.LogDebug($"DHCP started: {dhcpInitResult}");
+                _logger.Trace($"DHCP started: {dhcpInitResult}");
             }, 3);
         }
 
@@ -175,13 +174,13 @@ namespace MakoIoT.Device.Services.WiFi.AP
         public void StopDhcp()
         {
             _dhcpServer?.Stop();
-            _logger.LogDebug($"DHCP stopped");
+            _logger.Trace($"DHCP stopped");
         }
 
         /// <inheritdoc />
         public WiFiNetworkInfo[] GetAvailableNetworks()
         {
-            _logger.LogTrace("GetAvailableNetworks()");
+            _logger.Trace("GetAvailableNetworks()");
 
             _semaphore ??= new AutoResetEvent(false);
             _semaphore.Reset();
@@ -191,13 +190,13 @@ namespace MakoIoT.Device.Services.WiFi.AP
             _networks = new WiFiNetworkInfo[0];
 
             wifi.ScanAsync();
-            _logger.LogTrace("Scanning, waiting");
+            _logger.Trace("Scanning, waiting");
 
             _semaphore.WaitOne(60000, false);
 
             wifi.AvailableNetworksChanged -= WifiOnAvailableNetworksChanged;
             
-            _logger.LogTrace($"done, networks found: {_networks.Length}");
+            _logger.Trace($"done, networks found: {_networks.Length}");
             
             return _networks;
         }
@@ -205,10 +204,10 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void DisconnectWifi()
         {
-            _logger.LogDebug("Wifi disconnecting");
+            _logger.Trace("Wifi disconnecting");
             var adapters = WifiAdapter.FindAllAdapters();
             adapters[0].Disconnect();
-            _logger.LogTrace($"{wifiInterface.IPv4Address}");
+            _logger.Trace($"{wifiInterface.IPv4Address}");
 
         }
 
@@ -216,7 +215,7 @@ namespace MakoIoT.Device.Services.WiFi.AP
         {
             var networkReport = sender.NetworkReport;
 
-            _logger.LogTrace($"AvailableNetworksChanged, AvailableNetworks.Length: {networkReport.AvailableNetworks.Length}");
+            _logger.Trace($"AvailableNetworksChanged, AvailableNetworks.Length: {networkReport.AvailableNetworks.Length}");
 
             if (networkReport.AvailableNetworks.Length == 0)
                 return;
@@ -233,12 +232,10 @@ namespace MakoIoT.Device.Services.WiFi.AP
                 };
             }
 
-            _logger.LogTrace($"networks count {_networks.Length}");
-
+            _logger.Trace($"networks count {_networks.Length}");
             if (_networks.Length > 0)
             {
-                _logger.LogTrace("semaphore set");
-
+                _logger.Trace("semaphore set");
                 _semaphore.Set();
             }
         }

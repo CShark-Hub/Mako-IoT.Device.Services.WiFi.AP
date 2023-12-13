@@ -4,7 +4,6 @@ using Mako_IoT.Device.Services.WiFi.AP.Test.Mocks;
 using MakoIoT.Device.Services.WiFi.AP.Extensions;
 using MakoIoT.Device.Services.Interface;
 using MakoIoT.Device.Services.WiFi.AP;
-using Microsoft.Extensions.Logging;
 
 namespace Mako_IoT.Device.Services.WiFi.AP.Test.Extensions
 {
@@ -16,7 +15,7 @@ namespace Mako_IoT.Device.Services.WiFi.AP.Test.Extensions
         {
             var mockBuilder = new DeviceBuilderMock();
             mockBuilder.Services.AddSingleton(typeof(IConfigurationService), new ConfigurationServiceMock());
-            mockBuilder.Services.AddSingleton(typeof(ILogger), new LoggerMock());
+            mockBuilder.Services.AddSingleton(typeof(ILog), new LoggerMock());
 
             mockBuilder.AddWiFiInterfaceManager();
 
