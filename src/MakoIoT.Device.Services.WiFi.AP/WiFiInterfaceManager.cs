@@ -70,16 +70,16 @@ namespace MakoIoT.Device.Services.WiFi.AP
             }
         }
 
-        private readonly WiFiAPConfig _config;
         private DhcpServer _dhcpServer;
+        private readonly IConfigurationService _configService;
         private readonly ILog _logger;
         private AutoResetEvent _semaphore;
         private WiFiNetworkInfo[] _networks;
 
         public WiFiInterfaceManager(IConfigurationService configService, ILog logger)
         {
+            _configService = configService;
             _logger = logger;
-            _config = (WiFiAPConfig)configService.GetConfigSection(WiFiAPConfig.SectionName, typeof(WiFiAPConfig));
         }
 
         /// <inheritdoc />
@@ -120,19 +120,20 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void EnableAP()
         {
-            apInterface.EnableStaticIPv4(_config.IpAddress, _config.SubnetMask, _config.IpAddress);
-            apConfiguration.Ssid = _config.Ssid;
-            if (String.IsNullOrEmpty(_config.Password))
+            var config = GetConfig();
+            apInterface.EnableStaticIPv4(config.IpAddress, config.SubnetMask, config.IpAddress);
+            apConfiguration.Ssid = config.Ssid;
+            if (String.IsNullOrEmpty(config.Password))
             {
                 apConfiguration.Authentication = AuthenticationType.Open;
             }
             else
             {
                 apConfiguration.Authentication = AuthenticationType.WPA2;
-                apConfiguration.Password = _config.Password;
+                apConfiguration.Password = config.Password;
             }
 
-            apConfiguration.MaxConnections = _config.MaxConnections;
+            apConfiguration.MaxConnections = config.MaxConnections;
 
             apConfiguration.Options = WirelessAPConfiguration.ConfigurationOptions.Enable |
                                        WirelessAPConfiguration.ConfigurationOptions.AutoStart;
@@ -157,16 +158,17 @@ namespace MakoIoT.Device.Services.WiFi.AP
         /// <inheritdoc />
         public void StartDhcp()
         {
-            _dhcpServer ??= new DhcpServer { CaptivePortalUrl = $"http://{_config.IpAddress}" };
+            var config = GetConfig();
+            _dhcpServer ??= new DhcpServer { CaptivePortalUrl = $"http://{config.IpAddress}" };
 
             Invoker.Retry(() =>
             {
                 var dhcpInitResult =
-                    _dhcpServer.Start(IPAddress.Parse(_config.IpAddress), IPAddress.Parse(_config.SubnetMask));
+                    _dhcpServer.Start(IPAddress.Parse(config.IpAddress), IPAddress.Parse(config.SubnetMask));
                 if (!dhcpInitResult)
                     throw new Exception("DHCP failed to start");
 
-                _logger.Trace($"DHCP started: {dhcpInitResult}");
+                _logger.Trace("DHCP started");
             }, 3);
         }
 
@@ -251,6 +253,11 @@ namespace MakoIoT.Device.Services.WiFi.AP
             }
 
             throw new InvalidOperationException();
+        }
+
+        private WiFiAPConfig GetConfig()
+        {
+            return (WiFiAPConfig)_configService.GetConfigSection(WiFiAPConfig.SectionName, typeof(WiFiAPConfig));
         }
     }
 }
