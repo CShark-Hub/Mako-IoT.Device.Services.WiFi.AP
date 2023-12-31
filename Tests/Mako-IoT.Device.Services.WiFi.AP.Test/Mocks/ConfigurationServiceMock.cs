@@ -23,6 +23,11 @@ namespace Mako_IoT.Device.Services.WiFi.AP.Test.Mocks
             throw new NotImplementedException();
         }
 
+        public bool TryGetConfigSection(string sectionName, Type objectType, out object section)
+        {
+            throw new NotImplementedException();
+        }
+
         public string[] GetSections()
         {
             throw new NotImplementedException();
