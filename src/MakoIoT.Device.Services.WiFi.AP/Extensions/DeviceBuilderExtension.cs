@@ -7,7 +7,7 @@ namespace MakoIoT.Device.Services.WiFi.AP.Extensions
     {
         public static IDeviceBuilder AddWiFiInterfaceManager(this IDeviceBuilder builder)
         {
-            builder.Services.AddSingleton(typeof(INetworkInterfaceManager), typeof(WiFiInterfaceManager));
+            builder.Services.AddTransient(typeof(INetworkInterfaceManager), typeof(WiFiInterfaceManager));
 
             return builder;
         }
