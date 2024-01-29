@@ -24,9 +24,9 @@
       <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.450" />
       <dependency id="nanoFramework.Runtime.Events" version="1.11.15" />
       <dependency id="nanoFramework.System.Collections" version="1.5.31" />
-      <dependency id="nanoFramework.System.Device.Wifi" version="1.5.74" />
+      <dependency id="nanoFramework.System.Device.Wifi" version="1.5.76" />
       <dependency id="nanoFramework.System.IO.Streams" version="1.1.52" />
-      <dependency id="nanoFramework.System.Net" version="1.10.70" />
+      <dependency id="nanoFramework.System.Net" version="1.10.72" />
       <dependency id="nanoFramework.System.Text" version="1.2.54" />
       <dependency id="nanoFramework.System.Threading" version="1.1.32" />
     </dependencies>
