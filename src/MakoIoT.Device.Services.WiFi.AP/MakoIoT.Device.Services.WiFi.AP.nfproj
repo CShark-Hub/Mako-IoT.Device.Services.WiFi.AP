@@ -34,7 +34,7 @@
       <HintPath>..\..\packages\MakoIoT.Device.Services.Interface.1.0.47.44904\lib\MakoIoT.Device.Services.Interface.dll</HintPath>
     </Reference>
     <Reference Include="MakoIoT.Device.Utilities.Invoker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\MakoIoT.Device.Utilities.Invoker.1.0.35.30819\lib\MakoIoT.Device.Utilities.Invoker.dll</HintPath>
+      <HintPath>..\..\packages\MakoIoT.Device.Utilities.Invoker.1.0.36.43501\lib\MakoIoT.Device.Utilities.Invoker.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib, Version=1.15.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
