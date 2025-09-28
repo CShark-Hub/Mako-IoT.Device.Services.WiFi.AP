@@ -17,8 +17,8 @@
     <description>WiFi Access Point library for MAKO-IoT</description>
     <tags>nanoFramework C# csharp netmf netnf mako-iot wifi ap access point</tags>
     <dependencies>
-      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.56.42770" />
-      <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.48.26874" />
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.57.48509" />
+      <dependency id="MakoIoT.Device.Utilities.Invoker" version="1.0.49.58921" />
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
       <dependency id="nanoFramework.DependencyInjection" version="1.1.32" />
       <dependency id="nanoFramework.Iot.Device.DhcpServer" version="1.2.851" />
